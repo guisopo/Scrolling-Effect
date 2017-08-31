@@ -59,9 +59,6 @@
 
   slider.addEventListener('scroll', onScroll, false);
 
-
-
-
   function animateArrayOfItems() {
     var children = Array.from(slider.children);
     children.forEach(function(child) {
@@ -70,12 +67,12 @@
 
   }
 
-
+  // function that calculates the css-transform value
   function map_range(currentPosition, startPoint, finalPoint, startValue, finalValue) {
     return (startValue + (finalValue - startValue) * (currentPosition - startPoint) / (finalPoint - startPoint)).toFixed(8);
   }
 
-
+  // function that animates the item
   function animate(item) {
 
       var itemPosition = (item.getBoundingClientRect().left);
@@ -84,12 +81,13 @@
       var scaling;
       var opacity;
 
+      // check if the item is visible
       var itemInsideWindow = (itemPosition < windowWidth + itemWidth && itemPosition > 0 - itemWidth);
-
+      // and if its visible...
       if (itemInsideWindow) {
-	      
+	      // calculate the item position by percentage (0% = left of the window, 100% = right of the window)
         var itemXPos = ((100 * (itemPosition + itemWidth/2)) / windowWidth).toFixed(8);
-        
+        // animate styles from % to %
         if(itemXPos < 150 && itemXPos > 51) {
           scaling = map_range(itemXPos, 100, 50, 0.8, 1);
           opacity = map_range(itemXPos, 100, 50, 0.75, 1);
@@ -97,7 +95,7 @@
           item.style.opacity = `${opacity}`;
           item.style.willChange = 'transform, opacity';
         }
-
+        // animate styles from % to %
         else if((itemXPos < 49 && itemXPos > -55)) {
           scaling = map_range(itemXPos, 50, 0, 1, 0.85);
           opacity = map_range(itemXPos, 50, 0, 1, 0.75);
@@ -105,94 +103,14 @@
           item.style.opacity = `${opacity}`;
           item.style.willChange = 'transform, opacity';
         }
-        
+        // set willChange to auto when not visible
         else if (itemXPos > 100) {
           item.style.willChange = 'auto';
         }
-        
+
       }
 
       ticking = false;
     }
 
-
-
 }());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//
-// // ANIMATION PART
-//
-//
-//
-//   function onScroll() {
-//     requestTick();
-//   }
-//
-//   function requestTick() {
-//     if(!ticking) {
-//       requestAnimationFrame(animate);
-//       ticking = true;
-//     }
-//   }
-//
-//   function map_range(actualPosition, startingPoint, endingPoint, startingValue, endingValue) {
-//     return (startingValue + (endingValue - startingValue) * (actualPosition - startingPoint) / (endingPoint - startingPoint));
-//   }
-//
-//   function animate() {
-//     paintings.forEach(function(paint) {
-//
-//       paintingPosition = (paint.getBoundingClientRect().left);
-//
-//       if (paintingPosition < windowWidth + paint.offsetWidth && paintingPosition > 0 - paint.offsetWidth) {
-//
-//         var xPos = ((100 * (paintingPosition + paint.offsetWidth/2)) / windowWidth);
-//
-//         if(xPos < 100 && xPos > 52.5) {
-//           var scalingUp = map_range(xPos, 100, 52.5, 0.95, 1.1);
-//           var clarity = map_range(xPos, 100, 52.5, 0.5, 1.1);
-//           paint.style.transform = 'translateX(500px) scale(' + scalingUp + ')';
-//           paint.style.opacity = `${clarity}`;
-//           paint.style.willChange = 'transform, opacity';
-//         }
-//
-//         else if((xPos < 47.5 && xPos > 0)) {
-//           var scalingDown = map_range(xPos, 47.5, 0, 1.1, 0.95);
-//           var obscurity = map_range(xPos, 47.5, 0, 1.1, 0.5);
-//           paint.style.transform = 'translateX(500px) scale(' + scalingDown + ')';
-//           paint.style.opacity = `${obscurity}`;
-//           paint.style.willChange = 'transform, opacity';
-//         }
-//         else if (xPos > 100) {
-//
-//           paint.style.willChange = 'auto';
-//         }
-//       }
-//
-//     });
-//     ticking = false;
-//   }
-//
-//
-//   paints.addEventListener('scroll', onScroll, false);
-//
-// }());
