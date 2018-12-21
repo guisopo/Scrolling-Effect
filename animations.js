@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var paintings = document.querySelectorAll('.painting'),
+  const paintings = document.querySelectorAll('.painting'),
       slider = document.querySelector('.paintings');
 
 
@@ -9,7 +9,7 @@
       LAZY LOADING
   =========================*/
 
-  window.addEventListener('load', function(event) {
+  window.addEventListener('load', function() {
     createObserver();
   }, false);
 
@@ -21,7 +21,6 @@
 
     observer = new IntersectionObserver(handleIntersect, options);
     paintings.forEach(paint => observer.observe(paint));
-
 
     function handleIntersect(entries, observer) {
       for (let entry of entries) {
@@ -43,7 +42,7 @@
   =========================*/
 
 
-  var ticking = false;
+  let ticking = false;
 
 
   function onScroll() {
@@ -60,7 +59,7 @@
   slider.addEventListener('scroll', onScroll, false);
 
   function animateArrayOfItems() {
-    var children = Array.from(slider.children);
+    let children = Array.from(slider.children);
     children.forEach(function(child) {
       animate(child);
     });
@@ -75,18 +74,18 @@
   // function that animates the item
   function animate(item) {
 
-      var itemPosition = (item.getBoundingClientRect().left);
-      var itemWidth = item.offsetWidth;
-      var windowWidth = window.innerWidth;
-      var scaling;
-      var opacity;
+      let itemPosition = (item.getBoundingClientRect().left);
+      let itemWidth = item.offsetWidth;
+      let windowWidth = window.innerWidth;
+      let scaling;
+      let opacity;
 
       // check if the item is visible
-      var itemInsideWindow = (itemPosition < windowWidth + itemWidth && itemPosition > 0 - itemWidth);
+      let itemInsideWindow = (itemPosition < windowWidth + itemWidth && itemPosition > 0 - itemWidth);
       // and if its visible...
       if (itemInsideWindow) {
 	      // calculate the item position by percentage (0% = left of the window, 100% = right of the window)
-        var itemXPos = ((100 * (itemPosition + itemWidth/2)) / windowWidth).toFixed(8);
+        let itemXPos = ((100 * (itemPosition + itemWidth/2)) / windowWidth).toFixed(8);
         // animate styles from % to %
         if(itemXPos < 150 && itemXPos > 51) {
           scaling = map_range(itemXPos, 100, 50, 0.8, 1);
